@@ -21,17 +21,17 @@ do
     if [[ $line =~ ^[0-9] || $line = "Optional" ]]; then
         # create directory and assign a variable
         mkdir -p "$line"
-        directory="$line"
+        timeFrame="$line"
     else
         # create the subdirectory 
-        mkdir -p "$directory/$line"
+        mkdir -p "$timeFrame/$line"
 
         # create the two docx file
-        touch "$directory/$line/studyNotes.docx"
-        touch "$directory/$line/testHistory.docx"
+        touch "$timeFrame/$line/studyNotes.docx"
+        touch "$timeFrame/$line/testHistory.docx"
 
         # logs the creation of new CMTPs
-        echo "$(date): $directory/$line was created." >> cmtp.log
+        echo "$(date): $timeFrame/$line was created." >> cmtp.log
     fi
 done < raw_text.txt
 

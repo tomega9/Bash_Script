@@ -3,7 +3,7 @@
 # Check if CMTP name is passed as an argument
 if [ $# -eq 0 ];then
 
-  read -p "Please provide the name of the CMTP as an argument.  "  cmtpName
+  read -p "Please provide the name of the CMTP as an argument.  "  line
 
   else
   echo "[$(date +'%Y-%m-%d %H:%M:%S')] No CMTP name argument passed to addCMTP.sh" >> cmtp.log
@@ -22,12 +22,12 @@ echo "6) Exit"
 
 read -p "Enter the number corresponding to the time frame: " userInput
 
-case $userInput in
-1) timeFrame="0-1_Months";;
-2) timeFrame="1-3_Months";;
-3) timeFrame="3-12_Months";;
-4) timeFrame="12-24_Months";;
-5) timeFrame="Optional";;
+case $userInput in 
+1) directory="0-1 Months";;
+2) directory="1-3 Months";;
+3) directory="3-12 Months";;
+4) directory="12-24 Months";;
+5) directory="Optional";;
 6) echo "Exiting the script."
 echo "[$(date +'%Y-%m-%d %H:%M:%S')] Exited the script." >> cmtp.log
 exit;;
@@ -78,9 +78,22 @@ while true; do
   esac
 done
 
-dir_name="$cmtpName - ($cmtpCategory)"
+dir_name="$line - ($cmtpCategory)"
 #Create the directory for the selected time frame
-mkdir "$timeFrame/$dir_name"
-touch "$timeFrame/$dir_name/studyNotes.docx"
-touch "$timeFrame/$dir_name/testHistory.docx"
-echo "[$(date +'%Y-%m-%d %H:%M:%S')] Created directory '$timeFrame/$dir_name'" >> cmtp.log
+if [ ! -d "$directory/$dir_name" ]; then
+mkdir "$directory/$dir_name"
+touch "$directory/$dir_name/studyNotes.docx"
+touch "$directory/$dir_name/testHistory.docx"
+echo "[$(date +'%Y-%m-%d %H:%M:%S')] Created directory '$directory/$dir_name'" >> cmtp.log
+else
+echo "[$(date +'%Y-%m-%d %H:%M:%S')] Error: Directory '$directory/$dir_name' already exists." >> cmtp.log
+exit 1
+fi
+
+exit 0
+
+
+
+
+
+
